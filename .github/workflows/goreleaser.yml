@@ -43,6 +43,15 @@ jobs:
           rpm -ivh *.src.rpm
           rm -f *.src.rpm
 
+      # Setup Android NDK (arm64 only)
+      - name: Setup Android NDK for arm64
+        run: |
+          ANDROID_NDK_VERSION=r26d
+          curl -O https://dl.google.com/android/repository/android-ndk-${ANDROID_NDK_VERSION}-linux.zip
+          unzip android-ndk-${ANDROID_NDK_VERSION}-linux.zip
+          mv android-ndk-${ANDROID_NDK_VERSION} /ndk
+          echo "/ndk/toolchains/llvm/prebuilt/linux-x86_64/bin" >> $GITHUB_PATH
+
       - name: Setup cross compile environment for Linux ARMv7
         env:
           CC: arm-linux-gnueabi-gcc
